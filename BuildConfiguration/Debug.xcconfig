@@ -1,14 +1,4 @@
-//
-//  Debug.xcconfig
-//  BookPlayer
-//
-//  Created by Gianni Carlo on 5/12/21.
-//  Copyright © 2021 BookPlayer LLC. All rights reserved.
-//
-
-// Configuration settings file format documentation can be found at:
-// https://help.apple.com/xcode/#/dev745c5c974
-
+// Local development signing configuration for ivanopcode.
 DEVELOPMENT_TEAM = V8V53456PB
 BP_ENTITLEMENTS = BookPlayer-NoCarPlay
 BP_BUNDLE_IDENTIFIER = com.ivanopcode.BookPlayer
