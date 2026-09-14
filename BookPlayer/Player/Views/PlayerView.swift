@@ -95,6 +95,11 @@ struct PlayerView: View {
           }
         )
 
+        // Book map button — hidden when the book has no useful chapter division
+        if let bookMap = viewModel.bookMap {
+          bookMapButton(bookMap)
+        }
+
         Spacer()
 
         PlayControlsRowView(isPlaying: viewModel.isPlaying)
@@ -210,6 +215,55 @@ struct PlayerView: View {
     }
   }
   
+  /// The single "Book Map" button below the progress: title + current chapter + chevron,
+  /// a proportional segmented bar of the whole book, and the current/remaining/total times.
+  /// It opens the chapter navigator and is exposed as one VoiceOver element.
+  @ViewBuilder
+  private func bookMapButton(_ bookMap: BookMapData) -> some View {
+    Button {
+      viewModel.openChapterMap()
+    } label: {
+      VStack(alignment: .leading, spacing: Spacing.S3) {
+        HStack(spacing: Spacing.S2) {
+          Text("chapter_map_title")
+            .bpFont(.miniPlayerTitle)
+          Text(bookMap.chapterDescription)
+            .bpFont(.caption)
+            .foregroundStyle(theme.secondaryColor)
+          Spacer()
+          Image(systemName: "chevron.up")
+            .bpFont(.caption)
+            .foregroundStyle(theme.secondaryColor)
+        }
+
+        ChapterMapBar(
+          layout: bookMap.layout,
+          barHeight: 11,
+          accessibilityLabel: bookMap.accessibilityLabel
+        )
+
+        HStack {
+          Text(bookMap.currentTime)
+            .frame(maxWidth: .infinity, alignment: .leading)
+          Text(bookMap.remainingTime)
+            .frame(maxWidth: .infinity, alignment: .center)
+          Text(bookMap.totalTime)
+            .frame(maxWidth: .infinity, alignment: .trailing)
+        }
+        .bpFont(.caption)
+        .monospacedDigit()
+        .foregroundStyle(theme.secondaryColor)
+      }
+      .padding(.vertical, Spacing.S3)
+      .contentShape(Rectangle())
+      .accessibilityElement(children: .ignore)
+      .accessibilityLabel(bookMap.accessibilityLabel)
+    }
+    .buttonStyle(.plain)
+    .frame(minHeight: 44)
+    .accessibilityHint("chapter_map_open_hint".localized)
+  }
+
   private func handleDragChanged(_ gesture: DragGesture.Value) {
     if gesture.translation.height > 0 {
       dragOffset = gesture.translation

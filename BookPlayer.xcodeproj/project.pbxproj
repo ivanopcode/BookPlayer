@@ -56,6 +56,9 @@
 		41064152258726D2008EB8D0 /* TimeListenedMediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41064151258726D2008EB8D0 /* TimeListenedMediumView.swift */; };
 		410D00E426DAB97700D11A45 /* Combine+BookPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410D00E326DAB97700D11A45 /* Combine+BookPlayer.swift */; };
 		410D00FA26DDCE6C00D11A45 /* ChaptersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410D00F926DDCE6C00D11A45 /* ChaptersViewModel.swift */; };
+		E1C0DE000000000000000001 /* ChapterMapLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C0DE000000000000000002 /* ChapterMapLayout.swift */; };
+		E1C0DE000000000000000003 /* ChapterMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C0DE000000000000000004 /* ChapterMapView.swift */; };
+		E1C0DE000000000000000005 /* ChapterMapLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C0DE000000000000000006 /* ChapterMapLayoutTests.swift */; };
 		410D0FF11EDF659900A52EB9 /* PlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410D0FF01EDF659900A52EB9 /* PlayerManager.swift */; };
 		4111FBDF25EDEFBE0096954F /* forest-green-ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4111FBDD25EDEFBD0096954F /* forest-green-ipad@2x.png */; };
 		4111FBE025EDEFBE0096954F /* forest-green-ipad@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4111FBDE25EDEFBD0096954F /* forest-green-ipad@3x.png */; };
@@ -1099,6 +1102,9 @@
 		41064151258726D2008EB8D0 /* TimeListenedMediumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeListenedMediumView.swift; sourceTree = "<group>"; };
 		410D00E326DAB97700D11A45 /* Combine+BookPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+BookPlayer.swift"; sourceTree = "<group>"; };
 		410D00F926DDCE6C00D11A45 /* ChaptersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewModel.swift; sourceTree = "<group>"; };
+		E1C0DE000000000000000002 /* ChapterMapLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterMapLayout.swift; sourceTree = "<group>"; };
+		E1C0DE000000000000000004 /* ChapterMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterMapView.swift; sourceTree = "<group>"; };
+		E1C0DE000000000000000006 /* ChapterMapLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterMapLayoutTests.swift; sourceTree = "<group>"; };
 		410D0FF01EDF659900A52EB9 /* PlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerManager.swift; sourceTree = "<group>"; };
 		4111FBB025EDD81C0096954F /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = hu; path = hu.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		4111FBB125EDD81C0096954F /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2100,6 +2106,7 @@
 			children = (
 				410D00F926DDCE6C00D11A45 /* ChaptersViewModel.swift */,
 				63652C722E6E8A9700231202 /* ChaptersView.swift */,
+				E1C0DE000000000000000004 /* ChapterMapView.swift */,
 			);
 			path = Chapters;
 			sourceTree = "<group>";
@@ -3241,6 +3248,7 @@
 			isa = PBXGroup;
 			children = (
 				F496A2BF4CBFFC745C453D42 /* ChaptersViewModelTests.swift */,
+				E1C0DE000000000000000006 /* ChapterMapLayoutTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3328,6 +3336,7 @@
 			children = (
 				99B367F92F4575C600C38F7F /* MediaAction.swift */,
 				99329DCC2F3BFD33003F8E73 /* ProgressData.swift */,
+				E1C0DE000000000000000002 /* ChapterMapLayout.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4606,6 +4615,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1C0DE000000000000000001 /* ChapterMapLayout.swift in Sources */,
+				E1C0DE000000000000000003 /* ChapterMapView.swift in Sources */,
 				C451596D6866C856F3E5F7D1 /* IntegrationConnectionView.swift in Sources */,
 				C86098383F7FC099EED24AF7 /* IntegrationQuickConnectViews.swift in Sources */,
 				B14881000000000000000001 /* IntegrationCustomHeadersSectionView.swift in Sources */,
@@ -4976,6 +4987,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1C0DE000000000000000005 /* ChapterMapLayoutTests.swift in Sources */,
 				9F1C30FC2A2E593300D5BC81 /* PlayableItemMock.swift in Sources */,
 				69343D36213A07B4000C425E /* VoiceOverServiceTest.swift in Sources */,
 				8AAA4F4C2CF1FF8C009D0777 /* MockCoordinatorPresentationFlow.swift in Sources */,

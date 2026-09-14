@@ -19,6 +19,20 @@ enum PlayerSheetStyle: String, Identifiable {
     var id: String { self.rawValue }
 }
 
+/// Data backing the "Book Map" button on the player.
+///
+/// `nil` when the book has no useful chapter division, in which case the button is hidden.
+struct BookMapData: Equatable {
+  let layout: ChapterMapLayout.Layout
+  /// "Chapter X of Y" description of the current chapter.
+  let chapterDescription: String
+  let currentTime: String
+  let remainingTime: String
+  let totalTime: String
+  /// VoiceOver label for the map (exposed as a single element).
+  let accessibilityLabel: String
+}
+
 @MainActor
 final class PlayerViewModel: ObservableObject {
   @Published var progressData = ProgressData()
@@ -40,6 +54,8 @@ final class PlayerViewModel: ObservableObject {
   @Published var showButtonFreeScreen = false
   /// Whether the current chapter's file is a video (drives the video surface + fullscreen button)
   @Published var isVideoItem = false
+  /// The book map backing the map button below the progress. `nil` hides the button.
+  @Published private(set) var bookMap: BookMapData?
 
   let libraryService: LibraryServiceProtocol
   let playbackService: PlaybackServiceProtocol
@@ -303,6 +319,13 @@ final class PlayerViewModel: ObservableObject {
     self.sheetStyle = style
     self.displaySheet = true
   }
+
+  /// Opens the chapter navigator (the "Chapters" sheet) from the book map button.
+  /// This deliberately bypasses the bookmarks-vs-chapters list preference, because the map is
+  /// a dedicated chapter surface.
+  func openChapterMap() {
+    displaySheet(style: .chapters)
+  }
   
   func hideSheet() {
     self.displaySheet = false
@@ -457,6 +480,8 @@ final class PlayerViewModel: ObservableObject {
     }
     self.chapterBeforeSliderValueChange = currentItem?.currentChapter
 
+    self.updateBookMap(item: currentItem)
+
     let newProgressData = ProgressData(
       currentTime: currentTime,
       progress: progress,
@@ -472,6 +497,64 @@ final class PlayerViewModel: ObservableObject {
     }
   }
   
+  /// Recomputes the book map from the current item. Runs on every playback tick and on jumps,
+  /// so the marker stays live without introducing any new polling timer. A `nil` item, or a
+  /// book without a useful chapter division, clears the map (hiding the button).
+  private func updateBookMap(item: PlayableItem?) {
+    guard let item else {
+      if bookMap != nil { bookMap = nil }
+      return
+    }
+
+    let layout = ChapterMapLayout.layout(
+      chapters: item.chapters,
+      totalDuration: item.duration,
+      currentTime: item.currentTime
+    )
+
+    guard layout.isRenderable else {
+      if bookMap != nil { bookMap = nil }
+      return
+    }
+
+    let currentTimeString = TimeParser.formatTime(item.currentTime)
+    let remainingTimeString = TimeParser.formatTime(max(0, item.duration - item.currentTime))
+    let totalTimeString = TimeParser.formatTime(item.duration)
+
+    let chapterDescription = item.currentChapter.map { chapter in
+      String.localizedStringWithFormat(
+        "player_chapter_description".localized,
+        chapter.index,
+        item.chapters.count
+      )
+    } ?? ""
+
+    let timePart = String.localizedStringWithFormat(
+      "chapter_map_time_label".localized,
+      currentTimeString,
+      totalTimeString
+    )
+    let accessibilityLabel = String.localizedStringWithFormat(
+      "chapter_map_accessibility_label".localized,
+      chapterDescription,
+      timePart
+    )
+
+    let newBookMap = BookMapData(
+      layout: layout,
+      chapterDescription: chapterDescription,
+      currentTime: currentTimeString,
+      remainingTime: remainingTimeString,
+      totalTime: totalTimeString,
+      accessibilityLabel: accessibilityLabel
+    )
+
+    // Skip the no-op write on every tick, mirroring the `progressData` guard above.
+    if bookMap != newBookMap {
+      bookMap = newBookMap
+    }
+  }
+
   func handleNextTap() {
     self.playerManager.skipToNextChapter()
   }

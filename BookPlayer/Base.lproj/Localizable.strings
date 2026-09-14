@@ -116,6 +116,12 @@
 "reparse_chapters_found_description" = "Found %d chapters.";
 "reparse_chapters_none_description" = "No additional chapters were found in this file.";
 "reparse_chapters_download_description" = "Download this book before reloading its chapters.";
+"chapter_map_title" = "Book Map";
+"chapter_map_time_label" = "%1$@ of %2$@";
+"chapter_map_accessibility_label" = "Book map. %1$@. %2$@";
+"chapter_map_open_hint" = "Opens the chapter navigator";
+"chapter_go_title" = "Go to chapter";
+"chapter_go_start_title" = "Go to start of chapter";
 "restore_title" = "Restore";
 "themes_caps_title" = "THEMES";
 "plus_app_icons_title" = "App Icons";
